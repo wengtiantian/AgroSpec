@@ -20,7 +20,7 @@ public class RedisConfig extends CachingConfigurerSupport
 {
     @Bean
     @SuppressWarnings(value = { "unchecked", "rawtypes" })
-    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory)
+    public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory, RedisKeySerializer redisKeySerializer)
     {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);
@@ -28,11 +28,11 @@ public class RedisConfig extends CachingConfigurerSupport
         FastJson2JsonRedisSerializer serializer = new FastJson2JsonRedisSerializer(Object.class);
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
-        template.setKeySerializer(new StringRedisSerializer());
+        template.setKeySerializer(redisKeySerializer);
         template.setValueSerializer(serializer);
 
         // Hash的key也采用StringRedisSerializer的序列化方式
-        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(redisKeySerializer);
         template.setHashValueSerializer(serializer);
 
         template.afterPropertiesSet();
