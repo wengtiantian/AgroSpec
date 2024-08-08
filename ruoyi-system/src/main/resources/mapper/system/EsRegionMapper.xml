@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.system.mapper.EsRegionMapper">
-    
+
     <resultMap type="EsRegion" id="EsRegionResult">
         <result property="id"    column="id"    />
         <result property="parentId"    column="parent_id"    />
@@ -12,24 +12,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="localName"    column="local_name"    />
         <result property="zipcode"    column="zipcode"    />
         <result property="cod"    column="cod"    />
+        <result property="leaf"    column="leaf"    />
     </resultMap>
 
     <sql id="selectEsRegionVo">
-        select id, parent_id, region_path, region_grade, local_name, zipcode, cod from es_region
+        select id, parent_id, region_path, region_grade, local_name, zipcode, cod, leaf from es_region
     </sql>
 
     <select id="selectEsRegionList" parameterType="EsRegion" resultMap="EsRegionResult">
         <include refid="selectEsRegionVo"/>
-        <where>  
+        <where>
             <if test="parentId != null "> and parent_id = #{parentId}</if>
             <if test="regionPath != null  and regionPath != ''"> and region_path = #{regionPath}</if>
             <if test="regionGrade != null "> and region_grade = #{regionGrade}</if>
             <if test="localName != null  and localName != ''"> and local_name like concat('%', #{localName}, '%')</if>
             <if test="zipcode != null  and zipcode != ''"> and zipcode = #{zipcode}</if>
             <if test="cod != null  and cod != ''"> and cod = #{cod}</if>
+            <if test="leaf != null "> and leaf = #{leaf}</if>
         </where>
     </select>
-    
+
     <select id="selectEsRegionById" parameterType="Long" resultMap="EsRegionResult">
         <include refid="selectEsRegionVo"/>
         where id = #{id}
@@ -45,7 +47,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="localName != null and localName != ''">local_name,</if>
             <if test="zipcode != null">zipcode,</if>
             <if test="cod != null">cod,</if>
-         </trim>
+            <if test="leaf != null">leaf,</if>
+        </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="parentId != null">#{parentId},</if>
@@ -54,7 +57,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="localName != null and localName != ''">#{localName},</if>
             <if test="zipcode != null">#{zipcode},</if>
             <if test="cod != null">#{cod},</if>
-         </trim>
+            <if test="leaf != null">#{leaf},</if>
+        </trim>
     </insert>
 
     <update id="updateEsRegion" parameterType="EsRegion">
@@ -66,6 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="localName != null and localName != ''">local_name = #{localName},</if>
             <if test="zipcode != null">zipcode = #{zipcode},</if>
             <if test="cod != null">cod = #{cod},</if>
+            <if test="leaf != null">leaf = #{leaf},</if>
         </trim>
         where id = #{id}
     </update>
@@ -75,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </delete>
 
     <delete id="deleteEsRegionByIds" parameterType="String">
-        delete from es_region where id in 
+        delete from es_region where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

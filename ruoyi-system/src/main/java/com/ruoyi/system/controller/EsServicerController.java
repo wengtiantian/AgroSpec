@@ -89,7 +89,7 @@ public class EsServicerController extends BaseController
         sysUser.setNickName(esServicer.getName());
         sysUser.setPassword(SecurityUtils.encryptPassword(("admin123")));
         sysUser.setPhonenumber(esServicer.getAccountPhone());
-        sysUser.setRoleIds(new Long[100]);
+        sysUser.setRoleIds(new Long[]{100L});
         sysUser.setSex("0");
         sysUser.setStatus("0");
         sysUser.setCreateBy(getUsername());
@@ -108,6 +108,22 @@ public class EsServicerController extends BaseController
     {
         return toAjax(esServicerService.updateEsServicer(esServicer));
     }
+
+    /**
+     * 修改服务主体
+     */
+    @PreAuthorize("@ss.hasRole('servicer')")
+    @Log(title = "服务主体", businessType = BusinessType.UPDATE)
+    @PutMapping("/editStatus")
+    public AjaxResult editStatus(@RequestBody EsServicer esServicer)
+    {
+        EsServicer esServicer1 = new EsServicer();
+        esServicer1.setId(esServicer.getId());
+        esServicer1.setIsAuth(esServicer.getIsAuth());
+        return toAjax(esServicerService.updateEsServicer(esServicer1));
+    }
+
+
 
     /**
      * 删除服务主体

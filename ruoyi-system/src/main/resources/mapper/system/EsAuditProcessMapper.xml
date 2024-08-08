@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.EsAuditProcessMapper">
+    
+    <resultMap type="EsAuditProcess" id="EsAuditProcessResult">
+        <result property="id"    column="id"    />
+        <result property="servicerId"    column="servicer_id"    />
+        <result property="auditContent"    column="audit_content"    />
+        <result property="auditResult"    column="audit_result"    />
+        <result property="comments"    column="comments"    />
+        <result property="auditorId"    column="auditor_id"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deletedAt"    column="deleted_at"    />
+    </resultMap>
+
+    <sql id="selectEsAuditProcessVo">
+        select id, servicer_id, audit_content, audit_result, comments, auditor_id, audit_time, create_time, update_time, deleted_at from es_audit_process
+    </sql>
+
+    <select id="selectEsAuditProcessList" parameterType="EsAuditProcess" resultMap="EsAuditProcessResult">
+        <include refid="selectEsAuditProcessVo"/>
+        <where>  
+            <if test="servicerId != null "> and servicer_id = #{servicerId}</if>
+            <if test="auditContent != null  and auditContent != ''"> and audit_content = #{auditContent}</if>
+            <if test="auditResult != null "> and audit_result = #{auditResult}</if>
+            <if test="comments != null  and comments != ''"> and comments = #{comments}</if>
+            <if test="auditorId != null "> and auditor_id = #{auditorId}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+            <if test="deletedAt != null "> and deleted_at = #{deletedAt}</if>
+        </where>
+    </select>
+    
+    <select id="selectEsAuditProcessById" parameterType="Long" resultMap="EsAuditProcessResult">
+        <include refid="selectEsAuditProcessVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEsAuditProcess" parameterType="EsAuditProcess" useGeneratedKeys="true" keyProperty="id">
+        insert into es_audit_process
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="servicerId != null">servicer_id,</if>
+            <if test="auditContent != null and auditContent != ''">audit_content,</if>
+            <if test="auditResult != null">audit_result,</if>
+            <if test="comments != null">comments,</if>
+            <if test="auditorId != null">auditor_id,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deletedAt != null">deleted_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="servicerId != null">#{servicerId},</if>
+            <if test="auditContent != null and auditContent != ''">#{auditContent},</if>
+            <if test="auditResult != null">#{auditResult},</if>
+            <if test="comments != null">#{comments},</if>
+            <if test="auditorId != null">#{auditorId},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deletedAt != null">#{deletedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEsAuditProcess" parameterType="EsAuditProcess">
+        update es_audit_process
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="servicerId != null">servicer_id = #{servicerId},</if>
+            <if test="auditContent != null and auditContent != ''">audit_content = #{auditContent},</if>
+            <if test="auditResult != null">audit_result = #{auditResult},</if>
+            <if test="comments != null">comments = #{comments},</if>
+            <if test="auditorId != null">auditor_id = #{auditorId},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deletedAt != null">deleted_at = #{deletedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEsAuditProcessById" parameterType="Long">
+        delete from es_audit_process where id = #{id}
+    </delete>
+
+    <delete id="deleteEsAuditProcessByIds" parameterType="String">
+        delete from es_audit_process where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

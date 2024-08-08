@@ -7,9 +7,9 @@ import com.ruoyi.common.core.domain.TreeEntity;
 
 /**
  * 地区(es_regions)对象 es_region
- * 
+ *
  * @author 王创
- * @date 2024-06-20
+ * @date 2024-08-02
  */
 public class EsRegion extends TreeEntity
 {
@@ -38,71 +38,85 @@ public class EsRegion extends TreeEntity
     @Excel(name = "是否支持货到付款")
     private String cod;
 
-    public void setId(Long id) 
+    /** 是否为叶子1为叶子 */
+    @Excel(name = "是否为叶子1为叶子")
+    private Integer leaf;
+
+    public void setId(Long id)
     {
         this.id = id;
     }
 
-    public Long getId() 
+    public Long getId()
     {
         return id;
     }
-    public void setRegionPath(String regionPath) 
+    public void setRegionPath(String regionPath)
     {
         this.regionPath = regionPath;
     }
 
-    public String getRegionPath() 
+    public String getRegionPath()
     {
         return regionPath;
     }
-    public void setRegionGrade(Integer regionGrade) 
+    public void setRegionGrade(Integer regionGrade)
     {
         this.regionGrade = regionGrade;
     }
 
-    public Integer getRegionGrade() 
+    public Integer getRegionGrade()
     {
         return regionGrade;
     }
-    public void setLocalName(String localName) 
+    public void setLocalName(String localName)
     {
         this.localName = localName;
     }
 
-    public String getLocalName() 
+    public String getLocalName()
     {
         return localName;
     }
-    public void setZipcode(String zipcode) 
+    public void setZipcode(String zipcode)
     {
         this.zipcode = zipcode;
     }
 
-    public String getZipcode() 
+    public String getZipcode()
     {
         return zipcode;
     }
-    public void setCod(String cod) 
+    public void setCod(String cod)
     {
         this.cod = cod;
     }
 
-    public String getCod() 
+    public String getCod()
     {
         return cod;
+    }
+    public void setLeaf(Integer leaf)
+    {
+        this.leaf = leaf;
+    }
+
+    public Integer getLeaf()
+    {
+        return leaf;
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("parentId", getParentId())
-            .append("regionPath", getRegionPath())
-            .append("regionGrade", getRegionGrade())
-            .append("localName", getLocalName())
-            .append("zipcode", getZipcode())
-            .append("cod", getCod())
-            .toString();
+                .append("id", getId())
+                .append("parentId", getParentId())
+                .append("regionPath", getRegionPath())
+                .append("regionGrade", getRegionGrade())
+                .append("localName", getLocalName())
+                .append("zipcode", getZipcode())
+                .append("cod", getCod())
+                .append("leaf", getLeaf())
+                .toString();
     }
 }
