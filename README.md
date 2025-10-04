@@ -1,5 +1,5 @@
-# AgroSpec
-Rural Characteristic Industry: Standardized Production Service Norms and Quality Evaluation System
+# AgroSpec-Backend
+Here is the backend code for the Rural Characteristic Industry: Standardized Production Service Norms and Quality Evaluation System.
 # AgroSpec: Rural Characteristic Industry Standardization System
 A comprehensive standardized production service and quality evaluation system for rural characteristic industries, built on the **RuoYi-Vue3** framework (Spring Boot + Vue3 + Element Plus). It integrates production standardization management, service specification, and quality evaluation to empower the digital transformation of rural industries.
 
