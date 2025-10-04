@@ -172,7 +172,7 @@ After the first login (admin account), complete these steps:
 
 
 ### 2. Common Operations
-- **Add Production Data**: Navigate to "Production Management" → "Add" to record production details.
+- **Service Subject Access**: Click "Subject Application" on the website's homepage.
 - **Evaluate Quality**: Go to "Quality Evaluation" → Select indicators → Generate evaluation reports.
 - **Generate Code**: Use "System Tools" → "Code Generator" to auto-generate CRUD code for new business tables.
 
