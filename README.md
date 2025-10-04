@@ -53,31 +53,6 @@ This project is split into two independent repositories for clear maintenance:
 | `src/router`    | Route configuration (permission-based route interception)                       |
 
 
-## Key Features
-### 1. Standardized Production Management
-- **Production Standard Library**: Manage industry-specific standards (e.g., planting processes, product quality indicators) with version control.
-- **Process Supervision**: Track production progress in real time, with automated reminders for non-compliant operations.
-- **Resource Management**: Manage supporting resources (machinery, technical personnel, service facilities) for rural industries.
-
-
-### 2. Service Specification
-- **Service Type Definition**: Classify rural services (e.g., technical guidance, quality testing) and define standard service processes.
-- **Service Subject Access**: Audit and manage service providers (enterprises, cooperatives) to ensure qualification compliance.
-- **Service Quality Tracking**: Record service feedback and evaluate service quality based on multi-dimensional indicators.
-
-
-### 3. Quality Evaluation System
-- **Multi-dimensional Evaluation**: Assess product/service quality using indicators like production compliance rate, user satisfaction, and testing results.
-- **Data Visualization**: Display evaluation results via dashboards (charts, tables) for intuitive data analysis.
-- **Report Export**: Export quality reports (Excel/PDF) for government supervision or enterprise internal management.
-
-
-### 4. Permission & Data Control
-- **RBAC Permission Model**: Fine-grained permission control (menu access, button operations) based on user roles (admin, supervisor, farmer).
-- **Data Permission**: Restrict data visibility by department/region (e.g., county-level users only see local industry data).
-- **Login Security**: JWT + Redis for secure authentication, with token expiration and refresh mechanisms.
-
-
 ## Quick Start
 ### 1. Prerequisites
 Ensure the following tools are installed:
@@ -98,7 +73,6 @@ Ensure the following tools are installed:
    - Create a MySQL database (name: `agrospec`, charset: `utf8mb4`)
    - Import SQL files from the `sql/` directory:
      - `ry_20240529.sql` (system core tables)
-     - `agrospec_business.sql` (rural industry business tables)
    - Modify database configuration in `ruoyi-admin/src/main/resources/application-druid.yml`:
      ```yaml
      spring:
@@ -192,10 +166,9 @@ For public access, deploy the system to a cloud server (e.g., Alibaba Cloud) usi
 ## Usage Guide
 ### 1. Initial Configuration
 After the first login (admin account), complete these steps:
-1. **Department Management**: Create rural industry management departments (e.g., county agriculture bureau).
-2. **Role Management**: Define roles (e.g., "Supervisor", "Service Provider") and assign permissions.
-3. **User Management**: Add system users and bind roles/departments.
-4. **Standard Library Setup**: Import industry standards (e.g., planting technical standards) into the system.
+1. **Role Management**: Define roles (e.g., "Supervisor", "Service Provider") and assign permissions.
+2. **User Management**: Add system users and bind roles/departments.
+3. **Standard Library Setup**: Import industry standards (e.g., planting technical standards) into the system.
 
 
 ### 2. Common Operations
@@ -213,7 +186,7 @@ After the first login (admin account), complete these steps:
 
 
 ## License
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+No licensed.
 
 
 ## Contact
