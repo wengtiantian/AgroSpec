@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.support.mapper.EsServiceTypeMapper">
+    
+    <resultMap type="EsServiceType" id="EsServiceTypeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="icon"    column="icon"    />
+        <result property="pid"    column="pid"    />
+        <result property="sorting"    column="sorting"    />
+        <result property="description"    column="description"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="isActive"    column="is_active"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="typePath"    column="type_path"    />
+    </resultMap>
+
+    <sql id="selectEsServiceTypeVo">
+        select id, name, icon, pid, sorting, description, create_time, update_time, is_active, create_by, update_by, type_path from es_service_type
+    </sql>
+
+    <select id="selectEsServiceTypeList" parameterType="EsServiceType" resultMap="EsServiceTypeResult">
+        <include refid="selectEsServiceTypeVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="icon != null  and icon != ''"> and icon = #{icon}</if>
+            <if test="pid != null "> and pid = #{pid}</if>
+            <if test="sorting != null "> and sorting = #{sorting}</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="isActive != null "> and is_active = #{isActive}</if>
+            <if test="typePath != null  and typePath != ''"> and type_path = #{typePath}</if>
+        </where>
+    </select>
+    
+    <select id="selectEsServiceTypeById" parameterType="Long" resultMap="EsServiceTypeResult">
+        <include refid="selectEsServiceTypeVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEsServiceType" parameterType="EsServiceType" useGeneratedKeys="true" keyProperty="id">
+        insert into es_service_type
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="icon != null">icon,</if>
+            <if test="pid != null">pid,</if>
+            <if test="sorting != null">sorting,</if>
+            <if test="description != null">description,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="isActive != null">is_active,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="typePath != null">type_path,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="icon != null">#{icon},</if>
+            <if test="pid != null">#{pid},</if>
+            <if test="sorting != null">#{sorting},</if>
+            <if test="description != null">#{description},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="isActive != null">#{isActive},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="typePath != null">#{typePath},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEsServiceType" parameterType="EsServiceType">
+        update es_service_type
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="icon != null">icon = #{icon},</if>
+            <if test="pid != null">pid = #{pid},</if>
+            <if test="sorting != null">sorting = #{sorting},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="isActive != null">is_active = #{isActive},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="typePath != null">type_path = #{typePath},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEsServiceTypeById" parameterType="Long">
+        delete from es_service_type where id = #{id}
+    </delete>
+
+    <delete id="deleteEsServiceTypeByIds" parameterType="String">
+        delete from es_service_type where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

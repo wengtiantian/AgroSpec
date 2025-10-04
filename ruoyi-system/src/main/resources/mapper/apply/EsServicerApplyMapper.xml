@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.apply.mapper.EsServicerApplyMapper">
+    
+    <resultMap type="EsServicerApply" id="EsServicerApplyResult">
+        <result property="id"    column="id"    />
+        <result property="applyUserId"    column="apply_user_id"    />
+        <result property="name"    column="name"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="accountPhone"    column="account_phone"    />
+        <result property="corporate"    column="corporate"    />
+        <result property="serviceTypeXx"    column="service_type_xx"    />
+        <result property="serviceTypePath"    column="service_type_path"    />
+        <result property="regionPre"    column="region_pre"    />
+        <result property="regionXx"    column="region_xx"    />
+        <result property="regionId"    column="region_id"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="logo"    column="logo"    />
+        <result property="video"    column="video"    />
+        <result property="manageCert"    column="manage_cert"    />
+        <result property="pictureUrls"    column="picture_urls"    />
+        <result property="population"    column="population"    />
+        <result property="income"    column="income"    />
+        <result property="serveNum"    column="serve_num"    />
+        <result property="farmersNum"    column="farmers_num"    />
+        <result property="serveArea"    column="serve_area"    />
+        <result property="raiseNum"    column="raise_num"    />
+        <result property="waterNum"    column="water_num"    />
+        <result property="otherNum"    column="other_num"    />
+        <result property="cropArea"    column="crop_area"    />
+        <result property="auditStatus"    column="audit_status"    />
+        <result property="isAuth"    column="is_auth"    />
+        <result property="manageStatus"    column="manage_status"    />
+        <result property="auditRemark"    column="audit_remark"    />
+        <result property="auditUserId"    column="audit_user_id"    />
+        <result property="auditTime"    column="audit_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEsServicerApplyVo">
+        select id, apply_user_id, name, type_id, account_phone, corporate, service_type_xx, service_type_path, region_pre, region_xx, region_id, introduce, logo, video, manage_cert, picture_urls, population, income, serve_num, farmers_num, serve_area, raise_num, water_num, other_num, crop_area, audit_status, is_auth, manage_status, audit_remark, audit_user_id, audit_time, create_by, create_time, update_by, update_time from es_servicer_apply
+    </sql>
+
+    <select id="selectEsServicerApplyList" parameterType="EsServicerApply" resultMap="EsServicerApplyResult">
+        <include refid="selectEsServicerApplyVo"/>
+        <where>  
+            <if test="applyUserId != null "> and apply_user_id = #{applyUserId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="accountPhone != null  and accountPhone != ''"> and account_phone = #{accountPhone}</if>
+            <if test="corporate != null  and corporate != ''"> and corporate = #{corporate}</if>
+            <if test="serviceTypeXx != null  and serviceTypeXx != ''"> and service_type_xx = #{serviceTypeXx}</if>
+            <if test="serviceTypePath != null  and serviceTypePath != ''"> and service_type_path = #{serviceTypePath}</if>
+            <if test="regionPre != null  and regionPre != ''"> and region_pre = #{regionPre}</if>
+            <if test="regionXx != null  and regionXx != ''"> and region_xx = #{regionXx}</if>
+            <if test="regionId != null  and regionId != ''"> and region_id = #{regionId}</if>
+            <if test="introduce != null  and introduce != ''"> and introduce like concat('%', #{introduce}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="video != null  and video != ''"> and video = #{video}</if>
+            <if test="manageCert != null  and manageCert != ''"> and manage_cert = #{manageCert}</if>
+            <if test="pictureUrls != null  and pictureUrls != ''"> and picture_urls = #{pictureUrls}</if>
+            <if test="population != null "> and population = #{population}</if>
+            <if test="params.beginIncome != null and params.beginIncome != '' and params.endIncome != null and params.endIncome != ''"> and income between #{params.beginIncome} and #{params.endIncome}</if>
+            <if test="params.beginServeNum != null and params.beginServeNum != '' and params.endServeNum != null and params.endServeNum != ''"> and serve_num between #{params.beginServeNum} and #{params.endServeNum}</if>
+            <if test="params.beginFarmersNum != null and params.beginFarmersNum != '' and params.endFarmersNum != null and params.endFarmersNum != ''"> and farmers_num between #{params.beginFarmersNum} and #{params.endFarmersNum}</if>
+            <if test="params.beginServeArea != null and params.beginServeArea != '' and params.endServeArea != null and params.endServeArea != ''"> and serve_area between #{params.beginServeArea} and #{params.endServeArea}</if>
+            <if test="params.beginRaiseNum != null and params.beginRaiseNum != '' and params.endRaiseNum != null and params.endRaiseNum != ''"> and raise_num between #{params.beginRaiseNum} and #{params.endRaiseNum}</if>
+            <if test="params.beginWaterNum != null and params.beginWaterNum != '' and params.endWaterNum != null and params.endWaterNum != ''"> and water_num between #{params.beginWaterNum} and #{params.endWaterNum}</if>
+            <if test="params.beginOtherNum != null and params.beginOtherNum != '' and params.endOtherNum != null and params.endOtherNum != ''"> and other_num between #{params.beginOtherNum} and #{params.endOtherNum}</if>
+            <if test="params.beginCropArea != null and params.beginCropArea != '' and params.endCropArea != null and params.endCropArea != ''"> and crop_area between #{params.beginCropArea} and #{params.endCropArea}</if>
+            <if test="auditStatus != null "> and audit_status = #{auditStatus}</if>
+            <if test="isAuth != null "> and is_auth = #{isAuth}</if>
+            <if test="manageStatus != null "> and manage_status = #{manageStatus}</if>
+            <if test="auditRemark != null  and auditRemark != ''"> and audit_remark = #{auditRemark}</if>
+            <if test="auditUserId != null "> and audit_user_id = #{auditUserId}</if>
+            <if test="auditTime != null "> and audit_time = #{auditTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectEsServicerApplyById" parameterType="Long" resultMap="EsServicerApplyResult">
+        <include refid="selectEsServicerApplyVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEsServicerApply" parameterType="EsServicerApply" useGeneratedKeys="true" keyProperty="id">
+        insert into es_servicer_apply
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="applyUserId != null">apply_user_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="accountPhone != null and accountPhone != ''">account_phone,</if>
+            <if test="corporate != null and corporate != ''">corporate,</if>
+            <if test="serviceTypeXx != null">service_type_xx,</if>
+            <if test="serviceTypePath != null">service_type_path,</if>
+            <if test="regionPre != null">region_pre,</if>
+            <if test="regionXx != null">region_xx,</if>
+            <if test="regionId != null">region_id,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="logo != null">logo,</if>
+            <if test="video != null">video,</if>
+            <if test="manageCert != null">manage_cert,</if>
+            <if test="pictureUrls != null">picture_urls,</if>
+            <if test="population != null">population,</if>
+            <if test="income != null">income,</if>
+            <if test="serveNum != null">serve_num,</if>
+            <if test="farmersNum != null">farmers_num,</if>
+            <if test="serveArea != null">serve_area,</if>
+            <if test="raiseNum != null">raise_num,</if>
+            <if test="waterNum != null">water_num,</if>
+            <if test="otherNum != null">other_num,</if>
+            <if test="cropArea != null">crop_area,</if>
+            <if test="auditStatus != null">audit_status,</if>
+            <if test="isAuth != null">is_auth,</if>
+            <if test="manageStatus != null">manage_status,</if>
+            <if test="auditRemark != null">audit_remark,</if>
+            <if test="auditUserId != null">audit_user_id,</if>
+            <if test="auditTime != null">audit_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="applyUserId != null">#{applyUserId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="accountPhone != null and accountPhone != ''">#{accountPhone},</if>
+            <if test="corporate != null and corporate != ''">#{corporate},</if>
+            <if test="serviceTypeXx != null">#{serviceTypeXx},</if>
+            <if test="serviceTypePath != null">#{serviceTypePath},</if>
+            <if test="regionPre != null">#{regionPre},</if>
+            <if test="regionXx != null">#{regionXx},</if>
+            <if test="regionId != null">#{regionId},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="video != null">#{video},</if>
+            <if test="manageCert != null">#{manageCert},</if>
+            <if test="pictureUrls != null">#{pictureUrls},</if>
+            <if test="population != null">#{population},</if>
+            <if test="income != null">#{income},</if>
+            <if test="serveNum != null">#{serveNum},</if>
+            <if test="farmersNum != null">#{farmersNum},</if>
+            <if test="serveArea != null">#{serveArea},</if>
+            <if test="raiseNum != null">#{raiseNum},</if>
+            <if test="waterNum != null">#{waterNum},</if>
+            <if test="otherNum != null">#{otherNum},</if>
+            <if test="cropArea != null">#{cropArea},</if>
+            <if test="auditStatus != null">#{auditStatus},</if>
+            <if test="isAuth != null">#{isAuth},</if>
+            <if test="manageStatus != null">#{manageStatus},</if>
+            <if test="auditRemark != null">#{auditRemark},</if>
+            <if test="auditUserId != null">#{auditUserId},</if>
+            <if test="auditTime != null">#{auditTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEsServicerApply" parameterType="EsServicerApply">
+        update es_servicer_apply
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="applyUserId != null">apply_user_id = #{applyUserId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="accountPhone != null and accountPhone != ''">account_phone = #{accountPhone},</if>
+            <if test="corporate != null and corporate != ''">corporate = #{corporate},</if>
+            <if test="serviceTypeXx != null">service_type_xx = #{serviceTypeXx},</if>
+            <if test="serviceTypePath != null">service_type_path = #{serviceTypePath},</if>
+            <if test="regionPre != null">region_pre = #{regionPre},</if>
+            <if test="regionXx != null">region_xx = #{regionXx},</if>
+            <if test="regionId != null">region_id = #{regionId},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="video != null">video = #{video},</if>
+            <if test="manageCert != null">manage_cert = #{manageCert},</if>
+            <if test="pictureUrls != null">picture_urls = #{pictureUrls},</if>
+            <if test="population != null">population = #{population},</if>
+            <if test="income != null">income = #{income},</if>
+            <if test="serveNum != null">serve_num = #{serveNum},</if>
+            <if test="farmersNum != null">farmers_num = #{farmersNum},</if>
+            <if test="serveArea != null">serve_area = #{serveArea},</if>
+            <if test="raiseNum != null">raise_num = #{raiseNum},</if>
+            <if test="waterNum != null">water_num = #{waterNum},</if>
+            <if test="otherNum != null">other_num = #{otherNum},</if>
+            <if test="cropArea != null">crop_area = #{cropArea},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
+            <if test="isAuth != null">is_auth = #{isAuth},</if>
+            <if test="manageStatus != null">manage_status = #{manageStatus},</if>
+            <if test="auditRemark != null">audit_remark = #{auditRemark},</if>
+            <if test="auditUserId != null">audit_user_id = #{auditUserId},</if>
+            <if test="auditTime != null">audit_time = #{auditTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEsServicerApplyById" parameterType="Long">
+        delete from es_servicer_apply where id = #{id}
+    </delete>
+
+    <delete id="deleteEsServicerApplyByIds" parameterType="String">
+        delete from es_servicer_apply where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

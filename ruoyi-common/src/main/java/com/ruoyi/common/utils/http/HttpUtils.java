@@ -9,6 +9,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 import javax.net.ssl.HostnameVerifier;
@@ -21,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.StringUtils;
+import java.util.Map;
 
 /**
  * 通用http发送方法
@@ -32,14 +34,61 @@ public class HttpUtils
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
-     * 向指定 URL 发送GET方法的请求
-     *
-     * @param url 发送请求的 URL
-     * @return 所代表远程资源的响应结果
+     * 发送GET请求
+     * 
+     * @param url 请求URL
+     * @param headers 请求头
+     * @return 响应内容
+     * @throws IOException 如果请求失败
      */
-    public static String sendGet(String url)
-    {
-        return sendGet(url, StringUtils.EMPTY);
+    public static String sendGetWithHeaders(String url, Map<String, String> headers) throws IOException {
+        HttpURLConnection connection = null;
+        try {
+            URL urlObj = new URL(url);
+            connection = (HttpURLConnection) urlObj.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            
+            // 设置请求头
+            if (headers != null) {
+                for (Map.Entry<String, String> entry : headers.entrySet()) {
+                    connection.setRequestProperty(entry.getKey(), entry.getValue());
+                }
+            }
+
+            // 记录连接信息
+            log.info("HTTP请求信息 - URL: {}, Method: {}, Headers: {}", 
+                    url, connection.getRequestMethod(), headers);
+
+            int responseCode = connection.getResponseCode();
+            log.info("HTTP响应码: {}", responseCode);
+            
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                String response = readResponse(connection);
+                log.info("HTTP响应内容: {}", response);
+                return response;
+            } else {
+                String errorResponse = readErrorResponse(connection);
+                log.error("HTTP请求失败 - 响应码: {}, 错误信息: {}", responseCode, errorResponse);
+                throw new IOException("Server returned HTTP response code: " + responseCode + " for URL: " + url);
+            }
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    /**
+     * 发送GET请求（无请求头版本）
+     * 
+     * @param url 请求URL
+     * @return 响应内容
+     * @throws IOException 如果请求失败
+     */
+    public static String sendGet(String url) throws IOException {
+        return sendGetWithHeaders(url, null);
     }
 
     /**
@@ -269,6 +318,30 @@ public class HttpUtils
         public boolean verify(String hostname, SSLSession session)
         {
             return true;
+        }
+    }
+
+    private static String readResponse(HttpURLConnection connection) throws IOException {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return response.toString();
+        }
+    }
+
+    private static String readErrorResponse(HttpURLConnection connection) throws IOException {
+        try (BufferedReader reader = new BufferedReader(
+                new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return response.toString();
         }
     }
 }

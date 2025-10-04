@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.subject.mapper.EsProducterMapper">
+    
+    <resultMap type="EsProducter" id="EsProducterResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="name"    column="name"    />
+        <result property="accountPhone"    column="account_phone"    />
+        <result property="idNumber"    column="id_number"    />
+        <result property="soilNum"    column="soil_num"    />
+        <result property="soilpic"    column="soilpic"    />
+        <result property="contract"    column="contract"    />
+        <result property="businessLicense"    column="business_license"    />
+        <result property="regionId"    column="region_id"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectEsProducterVo">
+        select id, user_id, type_id, name, account_phone, id_number, soil_num, soilpic, contract, business_license, region_id, create_by, create_time, update_by, update_time from es_producter
+    </sql>
+
+    <select id="selectEsProducterList" parameterType="EsProducter" resultMap="EsProducterResult">
+        <include refid="selectEsProducterVo"/>
+        <where>  
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="accountPhone != null  and accountPhone != ''"> and account_phone = #{accountPhone}</if>
+            <if test="idNumber != null  and idNumber != ''"> and id_number = #{idNumber}</if>
+            <if test="soilNum != null  and soilNum != ''"> and soil_num = #{soilNum}</if>
+            <if test="soilpic != null  and soilpic != ''"> and soilpic = #{soilpic}</if>
+            <if test="contract != null  and contract != ''"> and contract = #{contract}</if>
+            <if test="businessLicense != null  and businessLicense != ''"> and business_license = #{businessLicense}</if>
+            <if test="regionId != null "> and region_id = #{regionId}</if>
+        </where>
+    </select>
+    
+    <select id="selectEsProducterById" parameterType="Long" resultMap="EsProducterResult">
+        <include refid="selectEsProducterVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEsProducter" parameterType="EsProducter" useGeneratedKeys="true" keyProperty="id">
+        insert into es_producter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="name != null and name != ''">name,</if>
+            <if test="accountPhone != null and accountPhone != ''">account_phone,</if>
+            <if test="idNumber != null and idNumber != ''">id_number,</if>
+            <if test="soilNum != null and soilNum != ''">soil_num,</if>
+            <if test="soilpic != null">soilpic,</if>
+            <if test="contract != null">contract,</if>
+            <if test="businessLicense != null">business_license,</if>
+            <if test="regionId != null">region_id,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="accountPhone != null and accountPhone != ''">#{accountPhone},</if>
+            <if test="idNumber != null and idNumber != ''">#{idNumber},</if>
+            <if test="soilNum != null and soilNum != ''">#{soilNum},</if>
+            <if test="soilpic != null">#{soilpic},</if>
+            <if test="contract != null">#{contract},</if>
+            <if test="businessLicense != null">#{businessLicense},</if>
+            <if test="regionId != null">#{regionId},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEsProducter" parameterType="EsProducter">
+        update es_producter
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="accountPhone != null and accountPhone != ''">account_phone = #{accountPhone},</if>
+            <if test="idNumber != null and idNumber != ''">id_number = #{idNumber},</if>
+            <if test="soilNum != null and soilNum != ''">soil_num = #{soilNum},</if>
+            <if test="soilpic != null">soilpic = #{soilpic},</if>
+            <if test="contract != null">contract = #{contract},</if>
+            <if test="businessLicense != null">business_license = #{businessLicense},</if>
+            <if test="regionId != null">region_id = #{regionId},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEsProducterById" parameterType="Long">
+        delete from es_producter where id = #{id}
+    </delete>
+
+    <delete id="deleteEsProducterByIds" parameterType="String">
+        delete from es_producter where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

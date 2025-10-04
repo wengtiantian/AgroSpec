@@ -3,13 +3,14 @@ package com.ruoyi.system.controller;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
-import com.ruoyi.system.domain.EsServicer;
-import com.ruoyi.system.domain.EsStandards;
-import com.ruoyi.system.service.IEsServicerService;
-import com.ruoyi.system.service.IEsStandardsService;
+import com.ruoyi.subject.domain.EsServicer;
+import com.ruoyi.base.domain.EsStandards;
+import com.ruoyi.base.domain.EsNews;
+import com.ruoyi.subject.service.IEsServicerService;
+import com.ruoyi.base.service.IEsStandardsService;
+import com.ruoyi.base.service.IEsNewsService;
 import com.ruoyi.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ import java.util.List;
  * @BelongsPackage: com.ruoyi.system.controller
  * @Author: wang
  * @CreateTime: 2024-09-23 10:50
- * @Description: TODO
+ * @Description: TODO 公共接口
  * @Version: 1.0
  */
 @RestController
@@ -34,6 +35,8 @@ public class PublicController extends BaseController {
     private ISysUserService sysUserService;
     @Autowired
     private IEsStandardsService esStandardsService;
+    @Autowired
+    private IEsNewsService esNewsService;
 
     @GetMapping("/servicer/list")
     public TableDataInfo list(EsServicer esServicer)
@@ -51,6 +54,17 @@ public class PublicController extends BaseController {
     {
         startPage();
         List<EsStandards> list = esStandardsService.selectEsStandardsList(esStandards);
+        return getDataTable(list);
+    }
+
+    /**
+     * 查询行业资讯列表（匿名访问）
+     */
+    @GetMapping("/news/list")
+    public TableDataInfo list(EsNews esNews)
+    {
+        startPage();
+        List<EsNews> list = esNewsService.selectEsNewsList(esNews);
         return getDataTable(list);
     }
 

@@ -15,7 +15,9 @@ import com.ruoyi.common.core.domain.model.LoginBody;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.web.service.SysLoginService;
 import com.ruoyi.framework.web.service.SysPermissionService;
+import com.ruoyi.framework.web.service.TokenService;
 import com.ruoyi.system.service.ISysMenuService;
+import com.ruoyi.common.core.domain.model.LoginUser;
 
 /**
  * 登录验证
@@ -33,6 +35,9 @@ public class SysLoginController
 
     @Autowired
     private SysPermissionService permissionService;
+
+    @Autowired
+    private TokenService tokenService;
 
     /**
      * 登录方法
@@ -82,5 +87,25 @@ public class SysLoginController
         Long userId = SecurityUtils.getUserId();
         List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
         return AjaxResult.success(menuService.buildMenus(menus));
+    }
+
+    /**
+     * 退出登录
+     * 
+     * @return 结果
+     */
+    @GetMapping("/logout")
+    public AjaxResult logout()
+    {
+        try {
+            // 删除用户缓存记录
+            LoginUser loginUser = SecurityUtils.getLoginUser();
+            if (loginUser != null) {
+                tokenService.delLoginUser(loginUser.getToken());
+            }
+            return AjaxResult.success("退出成功");
+        } catch (Exception e) {
+            return AjaxResult.success("退出成功"); // 即使删除token失败也返回成功
+        }
     }
 }

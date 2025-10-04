@@ -56,12 +56,19 @@ public class ResourcesConfig implements WebMvcConfigurer
     {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        // 设置访问源地址
-        config.addAllowedOriginPattern("*");
+        // 设置访问源地址 - 修复allowCredentials与通配符冲突
+        config.addAllowedOriginPattern("http://47.92.95.129:9999");  // 生产部署地址
+        config.addAllowedOriginPattern("http://localhost:5270");     // 本地开发地址
+        config.addAllowedOriginPattern("http://localhost:*");        // 其他本地端口
+        config.addAllowedOriginPattern("http://127.0.0.1:*");
         // 设置访问源请求头
         config.addAllowedHeader("*");
         // 设置访问源请求方法
-        config.addAllowedMethod("*");
+        config.addAllowedMethod("GET");
+        config.addAllowedMethod("POST");
+        config.addAllowedMethod("PUT");
+        config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("OPTIONS");
         // 有效期 1800秒
         config.setMaxAge(1800L);
         // 添加映射路径，拦截一切请求

@@ -114,6 +114,10 @@ public class FileUploadUtils
 
         String absPath = getAbsoluteFile(baseDir, fileName).getAbsolutePath();
         file.transferTo(Paths.get(absPath));
+        
+        // 设置文件权限，确保nginx可以访问
+        setFilePermissions(absPath);
+        
         return getPathFileName(baseDir, fileName);
     }
 
@@ -135,9 +139,67 @@ public class FileUploadUtils
             if (!desc.getParentFile().exists())
             {
                 desc.getParentFile().mkdirs();
+                // 设置目录权限
+                setDirectoryPermissions(desc.getParentFile().getAbsolutePath());
             }
         }
         return desc;
+    }
+
+    /**
+     * 设置文件权限，确保nginx用户可以访问
+     * 仅在Unix/Linux系统上执行，Windows系统跳过
+     */
+    private static void setFilePermissions(String filePath)
+    {
+        // 检查操作系统类型，仅在Unix/Linux系统上设置权限
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("windows"))
+        {
+            // Windows系统跳过权限设置
+            return;
+        }
+        
+        try
+        {
+            // 设置文件权限为644 (rw-r--r--)
+            Runtime.getRuntime().exec("chmod 644 " + filePath);
+            // 设置文件所有者为www用户
+            Runtime.getRuntime().exec("chown www:www " + filePath);
+        }
+        catch (IOException e)
+        {
+            // 权限设置失败时记录日志但不抛出异常，避免影响文件上传
+            System.err.println("设置文件权限失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 设置目录权限，确保nginx用户可以访问
+     * 仅在Unix/Linux系统上执行，Windows系统跳过
+     */
+    private static void setDirectoryPermissions(String dirPath)
+    {
+        // 检查操作系统类型，仅在Unix/Linux系统上设置权限
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("windows"))
+        {
+            // Windows系统跳过权限设置
+            return;
+        }
+        
+        try
+        {
+            // 设置目录权限为755 (rwxr-xr-x)
+            Runtime.getRuntime().exec("chmod 755 " + dirPath);
+            // 设置目录所有者为www用户
+            Runtime.getRuntime().exec("chown www:www " + dirPath);
+        }
+        catch (IOException e)
+        {
+            // 权限设置失败时记录日志但不抛出异常
+            System.err.println("设置目录权限失败: " + e.getMessage());
+        }
     }
 
     public static final String getPathFileName(String uploadDir, String fileName) throws IOException

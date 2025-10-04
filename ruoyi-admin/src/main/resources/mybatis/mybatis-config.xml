@@ -15,6 +15,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         <setting name="logImpl"                  value="SLF4J"  />
         <!-- 使用驼峰命名法转换字段 -->
 		<!-- <setting name="mapUnderscoreToCamelCase" value="true"/> -->
+		<!-- 设置查询超时时间（秒） -->
+		<setting name="defaultStatementTimeout" value="30"/>
 	</settings>
 	
 </configuration>

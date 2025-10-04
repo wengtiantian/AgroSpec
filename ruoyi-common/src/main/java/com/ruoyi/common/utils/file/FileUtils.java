@@ -100,7 +100,41 @@ public class FileUtils
         {
             IOUtils.close(fos);
         }
+        
+        // 设置文件权限
+        if (!pathName.isEmpty()) {
+            setFilePermissions(uploadDir + File.separator + pathName);
+        }
+        
         return FileUploadUtils.getPathFileName(uploadDir, pathName);
+    }
+
+    /**
+     * 设置文件权限，确保nginx用户可以访问
+     * 仅在Unix/Linux系统上执行，Windows系统跳过
+     */
+    private static void setFilePermissions(String filePath)
+    {
+        // 检查操作系统类型，仅在Unix/Linux系统上设置权限
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.contains("windows"))
+        {
+            // Windows系统跳过权限设置
+            return;
+        }
+        
+        try
+        {
+            // 设置文件权限为644 (rw-r--r--)
+            Runtime.getRuntime().exec("chmod 644 " + filePath);
+            // 设置文件所有者为www用户
+            Runtime.getRuntime().exec("chown www:www " + filePath);
+        }
+        catch (IOException e)
+        {
+            // 权限设置失败时记录日志但不抛出异常，避免影响文件上传
+            System.err.println("设置文件权限失败: " + e.getMessage());
+        }
     }
 
     /**

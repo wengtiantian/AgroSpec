@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.support.mapper.EsCultivationMapper">
+    
+    <resultMap type="EsCultivation" id="EsCultivationResult">
+        <result property="id"    column="id"    />
+        <result property="standardId"    column="standard_id"    />
+        <result property="standardName"    column="standard_name"    />
+        <result property="companyName"    column="company_name"    />
+        <result property="publishDate"    column="publish_date"    />
+        <result property="impleDate"    column="imple_date"    />
+        <result property="author"    column="author"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="province"    column="province"    />
+    </resultMap>
+
+    <sql id="selectEsCultivationVo">
+        select id, standard_id, standard_name, company_name, publish_date, imple_date, author, file_url, province from es_cultivation
+    </sql>
+
+    <select id="selectEsCultivationList" parameterType="EsCultivation" resultMap="EsCultivationResult">
+        <include refid="selectEsCultivationVo"/>
+        <where>  
+            <if test="standardId != null  and standardId != ''"> and standard_id = #{standardId}</if>
+            <if test="standardName != null  and standardName != ''"> and standard_name like concat('%', #{standardName}, '%')</if>
+            <if test="companyName != null  and companyName != ''"> and company_name like concat('%', #{companyName}, '%')</if>
+            <if test="publishDate != null "> and publish_date = #{publishDate}</if>
+            <if test="impleDate != null "> and imple_date = #{impleDate}</if>
+            <if test="author != null  and author != ''"> and author = #{author}</if>
+            <if test="fileUrl != null  and fileUrl != ''"> and file_url = #{fileUrl}</if>
+            <if test="province != null  and province != ''"> and province = #{province}</if>
+        </where>
+    </select>
+    
+    <select id="selectEsCultivationById" parameterType="Long" resultMap="EsCultivationResult">
+        <include refid="selectEsCultivationVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertEsCultivation" parameterType="EsCultivation" useGeneratedKeys="true" keyProperty="id">
+        insert into es_cultivation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="standardId != null and standardId != ''">standard_id,</if>
+            <if test="standardName != null and standardName != ''">standard_name,</if>
+            <if test="companyName != null and companyName != ''">company_name,</if>
+            <if test="publishDate != null">publish_date,</if>
+            <if test="impleDate != null">imple_date,</if>
+            <if test="author != null">author,</if>
+            <if test="fileUrl != null and fileUrl != ''">file_url,</if>
+            <if test="province != null">province,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="standardId != null and standardId != ''">#{standardId},</if>
+            <if test="standardName != null and standardName != ''">#{standardName},</if>
+            <if test="companyName != null and companyName != ''">#{companyName},</if>
+            <if test="publishDate != null">#{publishDate},</if>
+            <if test="impleDate != null">#{impleDate},</if>
+            <if test="author != null">#{author},</if>
+            <if test="fileUrl != null and fileUrl != ''">#{fileUrl},</if>
+            <if test="province != null">#{province},</if>
+         </trim>
+    </insert>
+
+    <update id="updateEsCultivation" parameterType="EsCultivation">
+        update es_cultivation
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="standardId != null and standardId != ''">standard_id = #{standardId},</if>
+            <if test="standardName != null and standardName != ''">standard_name = #{standardName},</if>
+            <if test="companyName != null and companyName != ''">company_name = #{companyName},</if>
+            <if test="publishDate != null">publish_date = #{publishDate},</if>
+            <if test="impleDate != null">imple_date = #{impleDate},</if>
+            <if test="author != null">author = #{author},</if>
+            <if test="fileUrl != null and fileUrl != ''">file_url = #{fileUrl},</if>
+            <if test="province != null">province = #{province},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteEsCultivationById" parameterType="Long">
+        delete from es_cultivation where id = #{id}
+    </delete>
+
+    <delete id="deleteEsCultivationByIds" parameterType="String">
+        delete from es_cultivation where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
