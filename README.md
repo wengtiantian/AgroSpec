@@ -28,7 +28,7 @@ The system adopts a **前后端分离 (separated front-end and back-end)** archi
 ## System Structure
 ### 1. Repository Division
 This project is split into two independent repositories for clear maintenance:
-- **Backend**: [AgroSpec-backend]([https://github.com/wengtiantian/AgroSpec-backend](https://github.com/wengtiantian/AgroSpec/tree/master)) (core business logic, API, data access)
+- **Backend**: [AgroSpec-backend](https://github.com/wengtiantian/AgroSpec/tree/master) (core business logic, API, data access)
 - **Frontend**: [AgroSpec-frontend](https://github.com/wengtiantian/AgroSpec-frontend) (user interface, interactive logic)
 
 
