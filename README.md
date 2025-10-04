@@ -145,8 +145,6 @@ Ensure the following tools are installed:
    npm run dev
    ```
    - Access `http://localhost:5270` (default frontend port)
-   - Login with default account: `admin` / `admin123`
-
 
 ## Server Deployment (Production Environment)
 For public access, deploy the system to a cloud server (e.g., Alibaba Cloud) using **Pagoda Panel**:
